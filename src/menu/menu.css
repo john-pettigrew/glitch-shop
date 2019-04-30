@@ -1,0 +1,22 @@
+.menu{
+    list-style-type: none;
+    display: grid;
+    grid-template-rows: 70px;
+}
+
+.menu_item {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#open_file{
+    display: none;
+}
+
+.menu_left {
+    float: left;
+}
+
+.menu_right {
+    float: right;
+}

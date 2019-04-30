@@ -1,26 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
+import Menu from './menu/menu.js';
+import ImgDisplay from './img_display/img_display';
+import OpenTool from './tools/open';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {};
+
+    this.setDefaultState = this.setDefaultState.bind(this);
+    this.updateImage = this.updateImage.bind(this);
+    this.showErr = this.showErr.bind(this);
+  }
+
+  setDefaultState(){
+    this.setState({
+      //currentState: defaulState
+    });
+  }
+
+  updateImage(newImageData){
+    this.setState({
+     currentImage: newImageData, 
+    });
+  }
+
+  showErr(text){
+    console.log(text);
+  }
+
+  render(){
+    const mainMenuItems = [
+      new OpenTool(this.setDefaultState, this.updateImage),
+    ]
+    return (
+      <div className="App">
+        <Menu 
+          items={mainMenuItems} 
+          updateImage={this.updateImage}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        </Menu>
+        <ImgDisplay imgData={this.state.currentImage} >
+        </ImgDisplay>
+      </div>
+    );
+  }
 }
 
 export default App;
