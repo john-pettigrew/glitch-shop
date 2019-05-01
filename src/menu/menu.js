@@ -6,6 +6,7 @@ import FileUpload from '../tools/file_upload';
 class Menu extends React.Component {
     constructor(props){
         super(props);
+        this.state = {};
     }
 
     render(){
