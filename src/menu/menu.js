@@ -1,34 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './menu.css';
+import FileUpload from '../tools/file_upload';
 
 class Menu extends React.Component {
     constructor(props){
         super(props);
-
-        this.fileUploaded = this.fileUploaded.bind(this);
-    }
-
-    fileUploaded(){
-        if(this.fileUploadRef && this.fileUploadRef.files && this.fileUploadRef.files.length > 0){
-            console.log(this.fileUploadRef.files);
-            const reader = new FileReader();
-            reader.onerror = (err) => {
-                if(this.props.showErr){
-                    this.props.showErr('Error loading file...');
-                }
-            }
-            reader.onload = (e) => {
-                if(this.props.updateImage){
-                    const newImg = new Image();
-                    newImg.addEventListener('load', () => {
-                        this.props.updateImage(newImg);
-                    });
-                    newImg.src = e.target.result;
-                }
-            }
-            reader.readAsDataURL(this.fileUploadRef.files[0]);
-        }
     }
 
     render(){
@@ -49,13 +26,9 @@ class Menu extends React.Component {
                 <ul className="menu">
                     { items }
                 </ul>
-                <input
-                    type="file" 
-                    id="open_file" 
-                    accept="image/*" 
-                    onChange={this.fileUploaded} 
-                    ref={ref => {this.fileUploadRef = ref;}} 
-                 />
+                 <FileUpload
+                    updateImage={this.props.updateImage}
+                 ></FileUpload>
             </div>
         );
     }
