@@ -7,6 +7,7 @@ class ImgDisplay extends React.Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.getCurrentImageData = this.getCurrentImageData.bind(this);
   }
 
   onMouseDown(e) {
@@ -41,11 +42,22 @@ class ImgDisplay extends React.Component {
     canvas.removeEventListener('mouseup', this.onMouseUp);
   }
 
-  render(){
-    if(this.props.imgData){
+  getCurrentImageData(){
         const canvas = this.canvasRef;
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(this.props.imgData, 0, 0, 500, 500);
+        return ctx.getImageData(0, 0, canvas.width, canvas.height);
+  }
+
+  render(){
+    if(this.props.initImage || this.props.imageData){
+      const canvas = this.canvasRef;
+      const ctx = canvas.getContext('2d');
+      if(this.props.imageData){
+          ctx.putImageData(this.props.imageData, 0, 0);
+      }
+      else{
+          ctx.drawImage(this.props.initImage, 0, 0, 500, 500);
+      }
     }
 
     return (

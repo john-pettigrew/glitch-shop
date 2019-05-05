@@ -15,10 +15,10 @@ export default class FileUpload extends React.Component{
                 }
             }
             reader.onload = (e) => {
-                if(this.props.updateImage){
+                if(this.props.initImage){
                     const newImg = new Image();
                     newImg.addEventListener('load', () => {
-                        this.props.updateImage(newImg);
+                        this.props.initImage(newImg);
                     });
                     newImg.src = e.target.result;
                 }

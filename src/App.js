@@ -11,22 +11,31 @@ class App extends React.Component {
   constructor(props){
     super(props);
 
+    this.setDefaultState = this.setDefaultState.bind(this);
+    this.initImage = this.initImage.bind(this);
+    this.updateImage = this.updateImage.bind(this);
+    this.getCurrentImageData = this.getCurrentImageData.bind(this);
+    this.showErr = this.showErr.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.setSecondaryMenu = this.setSecondaryMenu.bind(this);
+
     this.mainMenuItems = [
       new OpenTool(this.setDefaultState, this.updateImage),
-      new ChromaticAberrationTool(this.setDefaultState, this.updateImage),
+      new ChromaticAberrationTool(this.setDefaultState, this.updateImage, this.getCurrentImageData, this.setSecondaryMenu),
     ]
 
     this.state = {
       currentState: this.mainMenuItems[1],
     };
-
-    this.setDefaultState = this.setDefaultState.bind(this);
-    this.updateImage = this.updateImage.bind(this);
-    this.showErr = this.showErr.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseMove = this.onMouseMove.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
   }
+
+  setSecondaryMenu(secondaryMenu){
+    this.setState({
+      secondaryMenu 
+    });
+  };
 
   setDefaultState(){
     this.setState({
@@ -38,6 +47,16 @@ class App extends React.Component {
     this.setState({
      currentImage: newImageData, 
     });
+  }
+
+  initImage(newImage){
+    this.setState({
+     initImage: newImage, 
+    });
+  }
+
+  getCurrentImageData(){
+    return this.imgDisplay.getCurrentImageData();
   }
 
   onMouseDown(x, y){
@@ -61,21 +80,32 @@ class App extends React.Component {
   }
 
   render(){
-    
     return (
       <div className="App">
         <Menu 
+          fileUploadEnabled={true}
           items={this.mainMenuItems} 
-          updateImage={this.updateImage}
+          initImage={this.initImage}
         >
         </Menu>
         <ImgDisplay 
-          imgData={this.state.currentImage} 
+          ref={ref => {this.imgDisplay = ref;}} 
+          initImage={this.state.initImage} 
+          imageData={this.state.currentImage} 
           onMouseDown={this.onMouseDown}
           onMouseUp={this.onMouseUp}
           onMouseMove={this.onMouseMove}
         >
         </ImgDisplay>
+        {this.state.secondaryMenu && 
+          <Menu 
+            fileUploadEnabled={false}
+            side='right'
+            items={this.state.secondaryMenu} 
+          >
+          </Menu>
+        }
+          
       </div>
     );
   }

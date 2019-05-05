@@ -5,11 +5,10 @@ class Open{
         this.updateImage = updateImage;
         this.title = 'Open';
 
-        this.onStateStart = this.onStateStart.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
-    onStateStart(){
-        console.log('open...');
+    onClick(){
         $('#open_file').trigger('click')
         return false;
     }

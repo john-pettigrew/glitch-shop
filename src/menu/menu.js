@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './menu.css';
 import FileUpload from '../tools/file_upload';
+import './menu.css';
 
 class Menu extends React.Component {
     constructor(props){
@@ -16,20 +16,22 @@ class Menu extends React.Component {
                 title={item.title} 
                 className="menu_item" 
                 key={item.title}
-                onClick={item.onStateStart}
+                onClick={item.onClick}
                 >
                     {item.title}
                 </li>
             )
         })
         return (
-            <div className={(this.props.side === 'right' ? 'menu_right' : 'menu_left')} >
+            <div className={'menu_container ' + (this.props.side === 'right' ? 'menu_right' : 'menu_left')} >
                 <ul className="menu">
                     { items }
                 </ul>
-                 <FileUpload
-                    updateImage={this.props.updateImage}
-                 ></FileUpload>
+                {this.props.fileUploadEnabled && 
+                <FileUpload
+                    initImage={this.props.initImage}
+                ></FileUpload>
+                }
             </div>
         );
     }
