@@ -43,14 +43,20 @@ class ImgDisplay extends React.Component {
   }
 
   getCurrentImageData(){
-        const canvas = this.canvasRef;
-        const ctx = canvas.getContext('2d');
-        return ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const canvas = this.canvasRef;
+      const ctx = canvas.getContext('2d');
+      return ctx.getImageData(0, 0, canvas.width, canvas.height);
   }
 
   getDataURL(){
-        const canvas = this.canvasRef;
-        return canvas.toDataURL('image/png');
+      const canvas = this.canvasRef;
+      return canvas.toDataURL('image/png');
+  }
+
+  clearScreen(){
+      const canvas = this.canvasRef;
+      const ctx = canvas.getContext('2d');
+      return ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
   render(){

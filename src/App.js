@@ -55,8 +55,10 @@ class App extends React.Component {
   }
 
   initImage(newImage){
+    this.imgDisplay.clearScreen();
     this.setState({
      initImage: newImage, 
+     currentImage: null
     });
   }
 
