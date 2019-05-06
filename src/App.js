@@ -2,19 +2,22 @@ import React from 'react';
 import Menu from './menu/menu.js';
 import ImgDisplay from './img_display/img_display';
 import OpenTool from './tools/open';
+import SaveTool from './tools/save';
 import ChromaticAberrationTool from './tools/chromatic_aberration';
 import './App.css';
-
-
+const defaultStateIndex = 2;
 
 class App extends React.Component {
   constructor(props){
     super(props);
 
+    this.state = {};
+
     this.setDefaultState = this.setDefaultState.bind(this);
     this.initImage = this.initImage.bind(this);
     this.updateImage = this.updateImage.bind(this);
     this.getCurrentImageData = this.getCurrentImageData.bind(this);
+    this.getDataURL = this.getDataURL.bind(this);
     this.showErr = this.showErr.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -23,12 +26,13 @@ class App extends React.Component {
 
     this.mainMenuItems = [
       new OpenTool(this.setDefaultState, this.updateImage),
+      new SaveTool(null, null, null, null, this.getDataURL),
       new ChromaticAberrationTool(this.setDefaultState, this.updateImage, this.getCurrentImageData, this.setSecondaryMenu),
     ]
+  }
 
-    this.state = {
-      currentState: this.mainMenuItems[1],
-    };
+  componentDidMount(){
+    this.setDefaultState();
   }
 
   setSecondaryMenu(secondaryMenu){
@@ -39,8 +43,9 @@ class App extends React.Component {
 
   setDefaultState(){
     this.setState({
-      currentState: this.mainMenuItems[1],
+      currentState: this.mainMenuItems[defaultStateIndex],
     });
+    this.mainMenuItems[defaultStateIndex].onClick();
   }
 
   updateImage(newImageData){
@@ -57,6 +62,10 @@ class App extends React.Component {
 
   getCurrentImageData(){
     return this.imgDisplay.getCurrentImageData();
+  }
+
+  getDataURL(){
+    return this.imgDisplay.getDataURL();
   }
 
   onMouseDown(x, y){
@@ -105,7 +114,7 @@ class App extends React.Component {
           >
           </Menu>
         }
-          
+        <a id="download_link" href="#"></a>
       </div>
     );
   }

@@ -48,6 +48,11 @@ class ImgDisplay extends React.Component {
         return ctx.getImageData(0, 0, canvas.width, canvas.height);
   }
 
+  getDataURL(){
+        const canvas = this.canvasRef;
+        return canvas.toDataURL('image/png');
+  }
+
   render(){
     if(this.props.initImage || this.props.imageData){
       const canvas = this.canvasRef;

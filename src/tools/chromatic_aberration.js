@@ -35,7 +35,6 @@ class Open{
 
     onClick(){
         this.setSecondaryButtons(this.secondaryButtons);
-        return true;
     }
 
     onMouseDown(x, y){

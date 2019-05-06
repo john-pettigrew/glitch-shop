@@ -10,7 +10,6 @@ class Open{
 
     onClick(){
         $('#open_file').trigger('click')
-        return false;
     }
 }
 
