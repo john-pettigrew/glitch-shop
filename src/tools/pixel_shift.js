@@ -1,52 +1,34 @@
-class Chromatic{
+class PixelShift{
     constructor(setState, updateImage, getCurrentImageData, setSecondaryButtons){
         this.setState = setState;
         this.updateImage = updateImage;
         this.getCurrentImageData = getCurrentImageData;
         this.setSecondaryButtons = setSecondaryButtons;
-        this.title = 'Chromatic Aberration';
+
+        this.title = 'Pixel Shift';
         this.clicking = false;
-        this.lastClickingPosition = {x:0, y: 0};
-        this.currentColor = 'r';
+        this.startClickPosition = {x:0, y: 0};
+        this.brushSize = 30;
 
         this.onClick = this.onClick.bind(this);
         this.onMouseDown = this.onMouseDown.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
-        this.shiftColor = this.shiftColor.bind(this);
-        this.changeColor = this.changeColor.bind(this);
-
-        this.secondaryButtons =[
-            {
-                title: 'Red',
-                onClick: this.changeColor.bind(this, 'r'),
-            },
-            {
-                title: 'Green',
-                onClick: this.changeColor.bind(this, 'g'),
-            },
-            {
-                title: 'Blue',
-                onClick: this.changeColor.bind(this, 'b'),
-            },
-        ] 
-
     }
 
     onClick(){
         this.setState(this);
-        this.setSecondaryButtons(this.secondaryButtons);
+        this.setSecondaryButtons(null);
     }
 
     onMouseDown(x, y){
         this.clicking = true;
-        this.lastClickingPosition = {x,y};
+        this.startClickPosition = {x,y};
     }
 
     onMouseMove(newX, newY){
         if(this.clicking){
-            this.shiftColor(newX - this.lastClickingPosition.x, newY - this.lastClickingPosition.y);
-            this.lastClickingPosition = {x: newX,y: newY};
+            this.shiftPixels(newX - this.startClickPosition.x, newY - this.startClickPosition.x);
         }
     }
 
@@ -58,7 +40,7 @@ class Chromatic{
         this.currentColor = newColor;
     }
 
-    shiftColor(deltaX, deltaY){
+    shiftPixels(deltaX, deltaY){
         let colorOffset = 0;
         if(this.currentColor === 'g'){
             colorOffset = 1;
@@ -95,4 +77,4 @@ class Chromatic{
     }
 }
 
-export default Chromatic;
+export default PixelShift;

@@ -1,7 +1,7 @@
 import $ from 'jquery'; 
 class Open{
-    constructor(returnState, updateImage){
-        this.returnState = returnState;
+    constructor(setState, updateImage){
+        this.setState = setState;
         this.updateImage = updateImage;
         this.title = 'Open';
 
